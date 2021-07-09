@@ -10,23 +10,23 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class AccountService implements IAccountService {
     @Autowired
     private AccountRepository accountRepository;
 
-    private  ModelMapper mapper = new ModelMapper();
 
     @Override
     public List<AccountDTO> findAll(){
         List<AccountEntity> entity = new ArrayList<>();
         List<AccountDTO> result = new ArrayList<>();
+        ModelMapper mapper = new ModelMapper();
         entity = accountRepository.findAll();
-        for(AccountEntity item : entity){
+        for (AccountEntity item : entity){
             AccountDTO dto = new AccountDTO();
-            dto = mapper.map(item, dto.getClass());
+            dto = mapper.map(item, AccountDTO.class);
+            dto.setPassword(null);
             result.add(dto);
         }
         return result;
@@ -34,7 +34,6 @@ public class AccountService implements IAccountService {
     @Override
     public void save(AccountDTO dto){
         AccountEntity accountEntity = new AccountEntity();
-        accountEntity = mapper.map(dto, accountEntity.getClass());
         accountRepository.save(accountEntity);
     }
 
