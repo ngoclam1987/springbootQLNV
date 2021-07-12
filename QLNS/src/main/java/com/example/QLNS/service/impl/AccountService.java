@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -63,11 +64,27 @@ public class AccountService implements IAccountService {
     }
 
     @Override
-    public void delete(long[] ids) {
+    @Transactional
+    public boolean deleteListItem(long[] ids) {
         for (long item : ids) {
-            accountRepository.deleteById(item);
+            try {
+                accountRepository.deleteById(item);
+            } catch (Exception e) {
+                return false;
+            }
         }
+        return true;
     }
 
+    @Transactional
+    @Override
+    public boolean deleteItem(long id) {
+        try {
+            accountRepository.deleteById(id);
+        } catch (Exception e) {
+            return false;
+        }
+        return true;
+    }
 
 }

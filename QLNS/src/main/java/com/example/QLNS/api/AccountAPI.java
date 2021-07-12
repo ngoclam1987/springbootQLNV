@@ -35,13 +35,30 @@ public class AccountAPI {
     }
 
     @PutMapping("update/{id}")
-    public void updateAccount(@RequestBody AccountDTO dto, @PathVariable("id") Long id) {
+    public ResponseEntity<?> updateAccount(@RequestBody AccountDTO dto, @PathVariable("id") Long id) {
         dto.setId(id);
-        accountService.save(dto);
+        boolean result = accountService.save(dto);
+        if(result){
+            return ResponseEntity.status(HttpStatus.OK).body("cập nhật account thành công");
+        }
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body("cập nhật account thất bại");
     }
 
-    @DeleteMapping("delete")
-    public void deleteAccount(@RequestBody long[] ids) {
-        accountService.delete(ids);
+    @DeleteMapping("deleteList")
+    public ResponseEntity<?> deleteLítAccount(@RequestBody long[] ids) {
+       boolean result = accountService.deleteListItem(ids);
+        if(result){
+            return ResponseEntity.status(HttpStatus.OK).body("xóa danh sách account thành công");
+        }
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body("xóa danh sách account thất bại");
+    }
+
+    @DeleteMapping("deleteItem/{id}")
+    public ResponseEntity<?> deleteAccount( @PathVariable("id") Long id) {
+        boolean result = accountService.deleteItem(id);
+        if(result){
+            return ResponseEntity.status(HttpStatus.OK).body("xóa account thành công");
+        }
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body("xóa account thất bại");
     }
 }

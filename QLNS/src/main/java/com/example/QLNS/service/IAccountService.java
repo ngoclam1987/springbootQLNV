@@ -8,6 +8,7 @@ import java.util.List;
 public interface IAccountService {
     List<AccountDTO> listAccount();
     boolean save(AccountDTO dto);
-    void  delete(long[] ids);
+    boolean  deleteListItem(long[] ids);
+    boolean deleteItem(long id);
 
 }
