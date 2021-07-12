@@ -4,30 +4,45 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.MappedSuperclass;
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedBy;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import javax.persistence.*;
+
+import static javax.persistence.TemporalType.TIMESTAMP;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @MappedSuperclass
-public abstract class BaseEntity {
+@EntityListeners(AuditingEntityListener.class)
+
+public abstract class BaseEntity<U> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "dateCreated")
-    private Date dateCreated;
+    @Column(name = "createdTime")
+    @CreatedDate
+    @Temporal(TIMESTAMP)
+    private Date createdTime;
+
     @Column(name = "createdBy")
-    private Long createdBy;
+    @CreatedBy
+    private U createdBy;
+
     @Column(name = "updatedBy")
-    private Long UpdatedBy;
-    @Column(name = "dateUpdated")
-    private Date dateUpdated;
+    @LastModifiedBy
+    private U UpdatedBy;
+
+    @Column(name = "updatedTime")
+    @LastModifiedDate
+    @Temporal(TIMESTAMP)
+    private Date updatedTime;
 
 }

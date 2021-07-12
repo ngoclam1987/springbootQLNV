@@ -17,7 +17,7 @@ import java.util.Date;
 @Entity
 @Table(name = "typeAccount")
 
-public class TypeAccount extends BaseEntity{
+public class TypeAccount extends BaseEntity<String>{
 
     @Column(name = "name")
     private String name;

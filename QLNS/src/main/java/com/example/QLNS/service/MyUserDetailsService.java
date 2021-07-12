@@ -1,5 +1,8 @@
 package com.example.QLNS.service;
 
+import com.example.QLNS.entity.AccountEntity;
+import com.example.QLNS.models.JwtRequest;
+import com.example.QLNS.repository.AccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -14,8 +17,18 @@ import java.util.ArrayList;
 public class MyUserDetailsService implements UserDetailsService {
     @Autowired
     PasswordEncoder passwordEncoder;
+
+    @Autowired
+    AccountRepository accountRepository;
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return new User("admin",passwordEncoder.encode("password"), new ArrayList<>());
+        AccountEntity entity = new AccountEntity();
+        entity = accountRepository.findUserByUserName(username);
+        if(entity != null){
+            return new User(entity.getUserName(),entity.getPassword(), new ArrayList<>());
+        }
+        return null;
     }
+
 }

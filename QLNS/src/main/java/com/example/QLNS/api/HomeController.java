@@ -4,13 +4,16 @@ import com.example.QLNS.models.JwtRequest;
 import com.example.QLNS.models.JwtResponse;
 import com.example.QLNS.security.jwt.JwtUtility;
 import com.example.QLNS.service.MyUserDetailsService;
+import com.example.QLNS.service.impl.AccountService;
 import com.sun.istack.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.util.RouteMatcher;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,6 +24,9 @@ public class HomeController {
 
     @Autowired
     private MyUserDetailsService userDetailsService;
+
+    @Autowired
+    private AccountService accountService;
 
     @Autowired
     private JwtUtility jwtUtility;

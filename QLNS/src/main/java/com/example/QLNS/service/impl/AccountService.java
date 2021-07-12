@@ -2,10 +2,12 @@ package com.example.QLNS.service.impl;
 
 import com.example.QLNS.dto.AccountDTO;
 import com.example.QLNS.entity.AccountEntity;
+import com.example.QLNS.models.JwtRequest;
 import com.example.QLNS.repository.AccountRepository;
 import com.example.QLNS.service.IAccountService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -13,17 +15,21 @@ import java.util.List;
 
 @Service
 public class AccountService implements IAccountService {
+
     @Autowired
     private AccountRepository accountRepository;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    private ModelMapper mapper = new ModelMapper();
 
     @Override
-    public List<AccountDTO> findAll(){
+    public List<AccountDTO> listAccount() {
         List<AccountEntity> entity = new ArrayList<>();
         List<AccountDTO> result = new ArrayList<>();
-        ModelMapper mapper = new ModelMapper();
         entity = accountRepository.findAll();
-        for (AccountEntity item : entity){
+        for (AccountEntity item : entity) {
             AccountDTO dto = new AccountDTO();
             dto = mapper.map(item, AccountDTO.class);
             dto.setPassword(null);
@@ -31,15 +37,33 @@ public class AccountService implements IAccountService {
         }
         return result;
     }
+
     @Override
-    public void save(AccountDTO dto){
+    public boolean save(AccountDTO dto) {
+
         AccountEntity accountEntity = new AccountEntity();
+        List<AccountEntity> listAccountEntity = accountRepository.findAll();
+
+        if (dto.getId() != null) {
+            accountEntity = accountRepository.getById(dto.getId());
+            if (dto.getUserName() != accountEntity.getUserName()) {
+                return false; // không cho người dùng cập nhật lại username
+            }
+        } else {
+            accountEntity = accountRepository.findUserByUserName(dto.getUserName());
+            if(accountEntity != null){
+                return false; // username đã tồn tại , không được phép thêm mới
+            }
+        }
+        accountEntity = mapper.map(dto, AccountEntity.class);
+        accountEntity.setPassword(passwordEncoder.encode(dto.getPassword()));
         accountRepository.save(accountEntity);
+        return true;
     }
 
     @Override
-    public  void  delete(long[] ids){
-        for (long item : ids){
+    public void delete(long[] ids) {
+        for (long item : ids) {
             accountRepository.deleteById(item);
         }
     }

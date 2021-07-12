@@ -16,7 +16,7 @@ import java.util.Date;
 @NoArgsConstructor
 @Entity
 @Table(name = "employee")
-public class EmployeeEntity extends BaseEntity {
+public class EmployeeEntity extends BaseEntity<String> {
 
     @Column(name = "name")
     private String name;

@@ -16,12 +16,17 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "account")
 
-public class AccountEntity extends BaseEntity {
+public class AccountEntity extends BaseEntity<String> {
 
     @Column(name = "userName")
     private String userName;
+
     @Column(name = "password")
     private String password;
+
     @Column(name = "accountTypeID")
     private Long accountTypeID;
+
+    @Column(name = "status")
+    private  int status;
 }
