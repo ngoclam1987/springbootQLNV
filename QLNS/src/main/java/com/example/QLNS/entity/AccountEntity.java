@@ -1,5 +1,6 @@
 package com.example.QLNS.entity;
 
+import com.example.QLNS.models.Auditable;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,7 +17,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "account")
 
-public class AccountEntity extends BaseEntity<String> {
+public class AccountEntity extends Auditable<String> {
 
     @Column(name = "userName")
     private String userName;
@@ -28,5 +29,5 @@ public class AccountEntity extends BaseEntity<String> {
     private Long accountTypeID;
 
     @Column(name = "status")
-    private  int status;
+    private Integer status;
 }

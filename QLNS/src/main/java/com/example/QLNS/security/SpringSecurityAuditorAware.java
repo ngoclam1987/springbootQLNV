@@ -10,7 +10,6 @@ import java.util.Optional;
 public class SpringSecurityAuditorAware implements AuditorAware<String> {
     @Override
     public Optional<String> getCurrentAuditor() {
-        // Just return a string representing the username
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (!(authentication instanceof AnonymousAuthenticationToken)) {
             String currentUserName = authentication.getName();

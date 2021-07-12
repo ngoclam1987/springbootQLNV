@@ -1,5 +1,6 @@
 package com.example.QLNS.entity;
 
+import com.example.QLNS.models.Auditable;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,7 +18,7 @@ import java.util.Date;
 @Entity
 @Table(name = "typeAccount")
 
-public class TypeAccount extends BaseEntity<String>{
+public class TypeAccount extends Auditable<String> {
 
     @Column(name = "name")
     private String name;

@@ -19,7 +19,7 @@ public class AccountAPI {
     @Autowired
     private AccountService accountService;
 
-    @GetMapping("/getlist")
+    @GetMapping("/getAll")
     public  ResponseEntity<?>  getListAccount() {
 
         return ResponseEntity.ok(accountService.listAccount());

@@ -32,7 +32,6 @@ public class AccountService implements IAccountService {
         for (AccountEntity item : entity) {
             AccountDTO dto = new AccountDTO();
             dto = mapper.map(item, AccountDTO.class);
-            dto.setPassword(null);
             result.add(dto);
         }
         return result;
@@ -46,12 +45,14 @@ public class AccountService implements IAccountService {
 
         if (dto.getId() != null) {
             accountEntity = accountRepository.getById(dto.getId());
-            if (dto.getUserName() != accountEntity.getUserName()) {
+            String userNameDTO = dto.getUserName();
+            String userNameEntity = accountEntity.getUserName();
+            if (!userNameDTO.equals(userNameEntity)) {
                 return false; // không cho người dùng cập nhật lại username
             }
         } else {
             accountEntity = accountRepository.findUserByUserName(dto.getUserName());
-            if(accountEntity != null){
+            if (accountEntity != null) {
                 return false; // username đã tồn tại , không được phép thêm mới
             }
         }

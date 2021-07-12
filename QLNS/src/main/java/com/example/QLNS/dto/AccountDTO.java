@@ -1,5 +1,6 @@
 package com.example.QLNS.dto;
 
+import com.example.QLNS.models.Auditable;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,9 +11,10 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 
-public class AccountDTO extends  BaseDTO{
+public class AccountDTO extends Auditable<String> {
 
     private String userName;
     private String password;
     private Long accountTypeID;
+    private Integer status;
 }

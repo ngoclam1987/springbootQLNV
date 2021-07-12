@@ -1,5 +1,5 @@
-package com.example.QLNS.entity;
-import java.util.Date;
+package com.example.QLNS.models;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,6 +11,7 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
+import java.util.Date;
 
 import static javax.persistence.TemporalType.TIMESTAMP;
 
@@ -21,7 +22,7 @@ import static javax.persistence.TemporalType.TIMESTAMP;
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
 
-public abstract class BaseEntity<U> {
+public abstract class Auditable<U> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

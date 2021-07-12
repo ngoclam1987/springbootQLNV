@@ -1,5 +1,6 @@
 package com.example.QLNS.entity;
 
+import com.example.QLNS.models.Auditable;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,7 +16,7 @@ import java.util.Set;
 @Entity
 @Table(name = "account")
 
-public class Role extends BaseEntity<String>{
+public class Role extends Auditable<String> {
 
     @Column(name = "roleName")
     private String roleName;
