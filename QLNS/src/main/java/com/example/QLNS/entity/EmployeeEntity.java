@@ -5,10 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Date;
 
 @Getter
@@ -47,7 +44,7 @@ public class EmployeeEntity extends Auditable<String> {
     private String address;
 
     @Column(name = "status")
-    private Boolean status;
+    private Integer status;
 
     @Column(name = "email")
     private String email;
@@ -70,8 +67,10 @@ public class EmployeeEntity extends Auditable<String> {
     @Column(name = "positionID")
     private Long positionID;
 
-    @Column(name = "accountID")
-    private Long accountID;
+
+    @OneToOne
+    @JoinColumn(name = "account_id", referencedColumnName="id")
+    private AccountEntity accountID;
 
     @Column(name = "departmentID")
     private Long departmentID;

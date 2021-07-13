@@ -1,14 +1,9 @@
 package com.example.QLNS.entity;
-
 import com.example.QLNS.models.Auditable;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.*;
 
 @Getter
 @Setter
@@ -22,12 +17,23 @@ public class AccountEntity extends Auditable<String> {
     @Column(name = "userName")
     private String userName;
 
-    @Column(name = "password")
+    @Column(name = "password" , columnDefinition = "varchar(255) default '123456'")
     private String password;
 
-    @Column(name = "accountTypeID")
-    private Long accountTypeID;
+    @ManyToOne
+    @JoinColumn(name = "account_type", referencedColumnName="id") // thông qua khóa ngoại address_id
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    private AccountTypeEntity accountType;
 
-    @Column(name = "status")
+    @Column(name = "status", columnDefinition = "integer default 1")
     private Integer status;
+
+    @ManyToMany
+    @JoinTable(
+            name = "account_role",
+            joinColumns = {@JoinColumn(name = "account_id", referencedColumnName="id")},
+            inverseJoinColumns = {@JoinColumn(name ="role_id",  referencedColumnName="id")}
+    )
+    private List<RoleEntity> mapRoles = new ArrayList<>();
 }

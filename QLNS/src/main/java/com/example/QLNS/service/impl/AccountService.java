@@ -2,14 +2,12 @@ package com.example.QLNS.service.impl;
 
 import com.example.QLNS.dto.AccountDTO;
 import com.example.QLNS.entity.AccountEntity;
-import com.example.QLNS.models.JwtRequest;
 import com.example.QLNS.repository.AccountRepository;
 import com.example.QLNS.service.IAccountService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,10 +24,31 @@ public class AccountService implements IAccountService {
     private ModelMapper mapper = new ModelMapper();
 
     @Override
+    public AccountDTO getAccountByID(long id){
+        boolean checkEx = accountRepository.existsById(id);
+        if(!checkEx){
+            return null;
+        }
+        AccountEntity entity = new AccountEntity();
+        entity = accountRepository.getById(id);
+        if(entity == null){
+            return null;
+        }
+        AccountDTO result = new AccountDTO();
+        result = mapper.map(entity,AccountDTO.class);
+        return result;
+    }
+
+    @Override
     public List<AccountDTO> listAccount() {
+
         List<AccountEntity> entity = new ArrayList<>();
         List<AccountDTO> result = new ArrayList<>();
-        entity = accountRepository.findAll();
+        try{
+            entity = accountRepository.findAll();
+        }catch (Exception e){
+            return null;
+        }
         for (AccountEntity item : entity) {
             AccountDTO dto = new AccountDTO();
             dto = mapper.map(item, AccountDTO.class);
@@ -40,7 +59,6 @@ public class AccountService implements IAccountService {
 
     @Override
     public boolean save(AccountDTO dto) {
-
         AccountEntity accountEntity = new AccountEntity();
         List<AccountEntity> listAccountEntity = accountRepository.findAll();
 
@@ -61,6 +79,7 @@ public class AccountService implements IAccountService {
         accountEntity.setPassword(passwordEncoder.encode(dto.getPassword()));
         accountRepository.save(accountEntity);
         return true;
+
     }
 
     @Override
