@@ -31,6 +31,7 @@ public class AccountAPI {
     }
 
     @GetMapping("/getAll")
+    @PreAuthorize("hasRole('SELECTED_ACCOUNT')")
     public ResponseEntity<?> getListAccount() {
         List<AccountDTO> result = accountService.getAllAccount();
         if (result != null) {

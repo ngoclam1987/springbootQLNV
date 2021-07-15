@@ -1,35 +1,40 @@
 package com.example.QLNS.models;
 
-
+import com.example.QLNS.entity.AccountEntity;
+import com.example.QLNS.entity.RoleEntity;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import javax.management.relation.Role;
+import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Set;
+import java.util.List;
 
 public class MyUserDetails implements UserDetails {
-    private User user;
+    private AccountEntity accountEntity;
 
-    public MyUserDetails(User user) {
-        this.user = user;
+    public MyUserDetails(AccountEntity accountEntity) {
+        this.accountEntity = accountEntity;
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-
-         return null;
+        List<RoleEntity> roles = accountEntity.getAccount_Roles();
+        List<SimpleGrantedAuthority> authorities = new ArrayList<>();
+        for (RoleEntity role : roles){
+            authorities.add(new SimpleGrantedAuthority(role.getRoleName()));
+        }
+         return authorities;
     }
 
     @Override
     public String getPassword() {
-        return user.getPassword();
+        return accountEntity.getPassword();
     }
 
     @Override
     public String getUsername() {
-        return user.getUsername();
+        return accountEntity.getUserName();
     }
 
     @Override
@@ -49,6 +54,6 @@ public class MyUserDetails implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return user.isEnabled();
+        return true;
     }
 }
