@@ -1,7 +1,7 @@
 package com.example.QLNS.api;
 
-import com.example.QLNS.models.JwtRequest;
-import com.example.QLNS.models.JwtResponse;
+import com.example.QLNS.models.LoginRequest;
+import com.example.QLNS.models.LoginResponse;
 import com.example.QLNS.models.ServiceResult;
 import com.example.QLNS.security.jwt.JwtUtility;
 import com.example.QLNS.service.MyUserDetailsService;
@@ -42,7 +42,7 @@ public class AuthenticateAPI {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> authenticate(@RequestBody JwtRequest jwtRequest) throws Exception {
+    public ResponseEntity<?> authenticate(@RequestBody LoginRequest jwtRequest) throws Exception {
 
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
@@ -55,8 +55,9 @@ public class AuthenticateAPI {
             return ResponseEntity.status(HttpStatus.ACCEPTED).body(new ServiceResult(StatusCodeConstant.ERROR,"Đăng nhập thất bại",null));
         }
         final String token = jwtUtility.generateToken(userDetails);
-        JwtResponse jwtResponse =  new JwtResponse(token);
+        LoginResponse jwtResponse =  new LoginResponse(token);
         Object result = jwtResponse;
         return ResponseEntity.status(HttpStatus.OK).body(new ServiceResult(StatusCodeConstant.SUCCESS,"Đăng nhập thành công",result));
     }
+
 }

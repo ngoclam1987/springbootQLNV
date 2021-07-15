@@ -19,7 +19,7 @@ public class EmployeeEntity extends Auditable<String> {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "birthDay")
+    @Column(name = "birth_day")
     private Date birthDay;
 
     @Column(name = "gender")
@@ -31,13 +31,13 @@ public class EmployeeEntity extends Auditable<String> {
     @Column(name = "nationality")
     private String nationality;
 
-    @Column(name = "idNumber")
+    @Column(name = "id_number")
     private String idNumber;
 
-    @Column(name = "dateRange")
+    @Column(name = "date_range")
     private Date dateRange;
 
-    @Column(name = "placeOfIssue")
+    @Column(name = "place_of_issue")
     private String placeOfIssue;
 
     @Column(name = "address")
@@ -49,22 +49,22 @@ public class EmployeeEntity extends Auditable<String> {
     @Column(name = "email")
     private String email;
 
-    @Column(name = "personalEmail")
+    @Column(name = "personal_email")
     private String personalEmail;
 
-    @Column(name = "taxCode")
+    @Column(name = "tax_code")
     private String taxCode;
 
-    @Column(name = "bankAccountNumber")
+    @Column(name = "bank_account_number")
     private String bankAccountNumber;
 
-    @Column(name = "beneficiaryBank")
+    @Column(name = "beneficiary_bank")
     private String beneficiaryBank;
 
-    @Column(name = "maritalStatus")
+    @Column(name = "marital_status")
     private Boolean maritalStatus;
 
-    @Column(name = "positionID")
+    @Column(name = "position_id")
     private Long positionID;
 
 
@@ -72,18 +72,16 @@ public class EmployeeEntity extends Auditable<String> {
     @JoinColumn(name = "account_id", referencedColumnName="id")
     private AccountEntity accountID;
 
-    @Column(name = "departmentID")
+    @Column(name = "department_id")
     private Long departmentID;
 
-    @Column(name = "managerID")
+    @Column(name = "manager_id")
     private Long managerID;
 
-    @Column(name = "workplaceID")
+    @Column(name = "workplace_id")
     private Long workplaceID;
 
     @Column(name = "note")
     private String note;
 
-    @Column(name = "relativesID")
-    private Long relativesID;
 }

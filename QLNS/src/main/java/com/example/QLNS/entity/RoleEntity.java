@@ -17,12 +17,21 @@ import java.util.List;
 
 public class RoleEntity extends Auditable<String> {
 
-    @Column(name = "roleName")
+    @Column(name = "role_name")
     private String roleName;
 
     @Column(name = "status")
     private  int status;
 
-    @ManyToMany(mappedBy = "mapRoles")
+    @ManyToMany(mappedBy = "Account_Roles")
     List<AccountEntity> accounts = new ArrayList<>();
+
+    @ManyToMany
+    @JoinTable(
+            name = "roles_groupRole",
+            joinColumns = @JoinColumn(
+                    name = "role_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(
+                    name = "groupRole_id", referencedColumnName = "id"))
+    private List<GroupRoleEntity> GroupRole_Role;
 }

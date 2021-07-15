@@ -24,23 +24,23 @@ import static javax.persistence.TemporalType.TIMESTAMP;
 public abstract class Auditable<U> {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(name = "createdTime")
+    @Column(name = "created_time")
     @CreatedDate
     @Temporal(TIMESTAMP)
     private Date createdTime;
 
-    @Column(name = "createdBy")
+    @Column(name = "created_by")
     @CreatedBy
     private U createdBy;
 
-    @Column(name = "updatedBy")
+    @Column(name = "updated_by")
     @LastModifiedBy
     private U UpdatedBy;
 
-    @Column(name = "updatedTime")
+    @Column(name = "updated_time")
     @LastModifiedDate
     @Temporal(TIMESTAMP)
     private Date updatedTime;

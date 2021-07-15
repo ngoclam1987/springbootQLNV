@@ -5,26 +5,21 @@ import lombok.*;
 import javax.persistence.*;
 import java.util.*;
 
-@Getter
-@Setter
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@Builder
 @Table(name = "account")
 
 public class AccountEntity extends Auditable<String> {
 
-    @Column(name = "userName")
+    @Column(name = "user_name")
     private String userName;
 
     @Column(name = "password" , columnDefinition = "varchar(255) default '123456'")
     private String password;
 
-    @ManyToOne
-    @JoinColumn(name = "account_type", referencedColumnName="id") // thông qua khóa ngoại address_id
-    @EqualsAndHashCode.Exclude
-    @ToString.Exclude
-    private AccountTypeEntity accountType;
 
     @Column(name = "status", columnDefinition = "integer default 1")
     private Integer status;
@@ -35,5 +30,13 @@ public class AccountEntity extends Auditable<String> {
             joinColumns = {@JoinColumn(name = "account_id", referencedColumnName="id")},
             inverseJoinColumns = {@JoinColumn(name ="role_id",  referencedColumnName="id")}
     )
-    private List<RoleEntity> mapRoles = new ArrayList<>();
+    private List<RoleEntity> Account_Roles = new ArrayList<>();
+
+    @ManyToMany
+    @JoinTable(
+            name = "account_groupRole",
+            joinColumns = {@JoinColumn(name = "account_id", referencedColumnName="id")},
+            inverseJoinColumns = {@JoinColumn(name ="groupRole_id",  referencedColumnName="id")}
+    )
+    private List<GroupRoleEntity> Account_GroupRoles = new ArrayList<>();
 }

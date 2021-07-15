@@ -14,7 +14,5 @@ import lombok.Setter;
 public class AccountDTO extends Auditable<String> {
 
     private String userName;
-    private String password;
-    private Long accountTypeID;
     private Integer status;
 }
